@@ -1,0 +1,4 @@
+wxauto4==41.1.7
+wechatauto-replica==1.2.2.5
+winsdk==1.0.0b10
+pypinyin==0.55.0

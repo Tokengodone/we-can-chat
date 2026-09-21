@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeFlow 聊天导出</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">W</div>
+      <div>
+        <h1>WeFlow 聊天导出</h1>
+        <p>读取、筛选并导出本机微信数据</p>
+      </div>
+    </div>
+    <div class="local-state"><span aria-hidden="true"></span>仅在本机处理</div>
+  </header>
+
+  <main class="workspace">
+    <section class="setup-pane" aria-labelledby="setup-title">
+      <div class="section-heading">
+        <h2 id="setup-title">连接微信数据</h2>
+        <p>密钥仅在当前运行期间使用，不会保存。</p>
+      </div>
+
+      <label class="field-label" for="account-dir">微信账号目录</label>
+      <div class="path-field">
+        <input id="account-dir" type="text" autocomplete="off" placeholder="选择包含 db_storage 的目录">
+        <button class="secondary-button browse-button" type="button" data-picker="account-dir">选择</button>
+      </div>
+
+      <label class="field-label" for="db-path">微信数据根目录</label>
+      <div class="path-field">
+        <input id="db-path" type="text" autocomplete="off" placeholder="账号目录的上一级">
+        <button class="secondary-button browse-button" type="button" data-picker="db-path">选择</button>
+      </div>
+
+      <label class="field-label" for="wxid">当前账号微信 ID</label>
+      <input id="wxid" type="text" autocomplete="off" placeholder="例如 wxid_abc123">
+
+      <label class="field-label" for="decrypt-key">数据库密钥</label>
+      <input id="decrypt-key" type="password" autocomplete="off" spellcheck="false" placeholder="输入 64 位数据库密钥">
+      <p class="field-help">这不是微信登录密码。</p>
+
+      <details class="advanced-settings">
+        <summary>图片解密参数（可选）</summary>
+        <div class="advanced-grid">
+          <label for="image-xor-key">XOR Key</label>
+          <input id="image-xor-key" type="number" inputmode="numeric" placeholder="例如 123">
+          <label for="image-aes-key">AES Key</label>
+          <input id="image-aes-key" type="password" autocomplete="off">
+        </div>
+      </details>
+
+      <button id="load-sessions" class="primary-button full-button" type="button">
+        <span class="button-label">读取会话</span>
+        <span class="button-loader" aria-hidden="true"></span>
+      </button>
+    </section>
+
+    <section class="sessions-pane" aria-labelledby="sessions-title">
+      <div class="sessions-toolbar">
+        <div>
+          <h2 id="sessions-title">选择需要导出的会话</h2>
+          <p id="session-count">连接数据后显示会话</p>
+        </div>
+        <button id="select-all" class="text-button" type="button" disabled>全选</button>
+      </div>
+      <label class="search-field" for="session-search">
+        <span aria-hidden="true">⌕</span>
+        <input id="session-search" type="search" placeholder="搜索联系人、群聊或微信 ID" disabled>
+      </label>
+      <div id="session-list" class="session-list" role="listbox" aria-multiselectable="true">
+        <div class="empty-state">
+          <div class="empty-symbol" aria-hidden="true">聊</div>
+          <h3>等待连接</h3>
+          <p>先在左侧选择微信账号目录并输入数据库密钥。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="export-pane" aria-labelledby="export-title">
+      <div class="section-heading">
+        <h2 id="export-title">导出设置</h2>
+        <p>选择格式和需要一同处理的内容。</p>
+      </div>
+
+      <label class="field-label" for="format">文件格式</label>
+      <select id="format">
+        <option value="html">HTML 网页</option>
+        <option value="json">JSON 数据</option>
+        <option value="markdown">Markdown 文档</option>
+        <option value="txt">TXT 文本</option>
+        <option value="excel">Excel 表格</option>
+        <option value="chatlab">ChatLab</option>
+        <option value="sql">SQL</option>
+      </select>
+
+      <label class="field-label" for="output-dir">保存位置</label>
+      <div class="path-field">
+        <input id="output-dir" type="text" autocomplete="off" placeholder="选择导出目录">
+        <button class="secondary-button browse-button" type="button" data-picker="output-dir">选择</button>
+      </div>
+
+      <div class="option-list">
+        <label class="switch-row">
+          <span><strong>导出媒体文件</strong><small>图片、语音、视频、表情和附件</small></span>
+          <input id="export-media" type="checkbox">
+          <i aria-hidden="true"></i>
+        </label>
+        <label class="switch-row">
+          <span><strong>语音转成文字</strong><small>使用文件夹内的本地 SenseVoice 模型</small></span>
+          <input id="voice-text" type="checkbox">
+          <i aria-hidden="true"></i>
+        </label>
+        <label class="switch-row">
+          <span><strong>包含头像</strong><small>在支持的导出格式中附带头像</small></span>
+          <input id="export-avatars" type="checkbox">
+          <i aria-hidden="true"></i>
+        </label>
+      </div>
+
+      <div class="model-status"><span aria-hidden="true">✓</span><div><strong>语音模型已就绪</strong><small>所有识别均在本机完成</small></div></div>
+    </section>
+  </main>
+
+  <footer class="actionbar">
+    <div class="action-status" aria-live="polite">
+      <span id="status-dot" class="status-dot"></span>
+      <div>
+        <strong id="status-title">准备就绪</strong>
+        <span id="status-detail">连接微信数据后即可开始导出</span>
+      </div>
+    </div>
+    <div id="progress-wrap" class="progress-wrap" hidden>
+      <div class="progress-meta"><span id="progress-label">正在准备</span><span id="progress-value">0%</span></div>
+      <div class="progress-track"><span id="progress-bar"></span></div>
+    </div>
+    <button id="open-output" class="secondary-button" type="button" hidden>打开结果目录</button>
+    <button id="start-export" class="primary-button export-button" type="button" disabled>开始导出</button>
+  </footer>
+
+  <div id="toast-region" class="toast-region" aria-live="assertive"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

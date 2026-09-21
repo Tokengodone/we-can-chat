@@ -1,0 +1,533 @@
+// WeFlow — ChatGPT-inspired design token system
+// Accent colors per theme, backgrounds unified across themes.
+@use './chat-patterns.scss';
+
+// =============================================
+// Light mode (default)
+// =============================================
+:root,
+[data-mode="light"] {
+  // ---- Accent / Brand (default = ChatGPT green) ----
+  --primary: #1238c7;
+  --primary-rgb: 18, 56, 199;
+  --primary-hover: #0b2a9d;
+  --primary-light: rgba(18, 56, 199, 0.1);
+  --primary-gradient: linear-gradient(135deg, #1238c7 0%, #3159e6 100%);
+
+  --danger: #ef4444;
+  --warning: #ff6b35;
+  --swiss-blue: #1238c7;
+  --swiss-yellow: #f2df00;
+  --swiss-green: #b7d900;
+  --swiss-orange: #ff6b35;
+
+  // ---- Backgrounds (same for all themes) ----
+  --bg-primary: #fbfbf8;
+  --bg-secondary: #f1f1eb;
+  --bg-secondary-solid: #f1f1eb;
+  --bg-tertiary: #e7e7df;
+  --bg-hover: #ececec;
+  --bg-sidebar: #f1f1eb;
+  --bg-gradient: linear-gradient(180deg, #fbfbf8 0%, #f1f1eb 100%);
+
+  // ---- Text ----
+  --text-primary: #151515;
+  --text-secondary: #4b4b4b;
+  --text-tertiary: #777777;
+
+  // ---- Borders ----
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-radius: 12px;
+
+  // ---- Shadows ----
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  // ---- Cards ----
+  --card-bg: #ffffff;
+  --card-inner-bg: #ffffff;
+  --sent-card-bg: var(--primary);
+
+  // ---- On-primary foreground ----
+  --on-primary: #ffffff;
+
+  // ---- Layout ----
+  --sidebar-width: 200px;
+
+  // ---- Gold Premium Theme ----
+  --gold-start: #c3aa87;
+  --gold-mid: #a88c64;
+  --gold-end: #7c6340;
+  --glow-color: rgba(168, 140, 100, 0.03);
+  --desc-text: #a8a29e;
+  --brand-text: #d6d3d1;
+}
+
+// =============================================
+// Dark mode
+// =============================================
+[data-mode="dark"] {
+  --primary: #6f8cff;
+  --primary-rgb: 111, 140, 255;
+  --primary-hover: #91a5ff;
+  --primary-light: rgba(111, 140, 255, 0.15);
+  --primary-gradient: linear-gradient(135deg, #3159e6 0%, #91a5ff 100%);
+
+  --danger: #f87171;
+  --warning: #ff8a5c;
+  --swiss-blue: #6f8cff;
+  --swiss-yellow: #f2df00;
+  --swiss-green: #b7d900;
+  --swiss-orange: #ff8a5c;
+
+  --bg-primary: #212121;
+  --bg-secondary: #2f2f2f;
+  --bg-secondary-solid: #2f2f2f;
+  --bg-tertiary: #383838;
+  --bg-hover: #383838;
+  --bg-sidebar: #171717;
+  --bg-gradient: linear-gradient(180deg, #212121 0%, #1a1a1a 100%);
+
+  --text-primary: #ececec;
+  --text-secondary: #b4b4b4;
+  --text-tertiary: #676767;
+
+  --border-color: rgba(255, 255, 255, 0.08);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+  --card-bg: #2f2f2f;
+  --card-inner-bg: #353535;
+  --sent-card-bg: var(--primary);
+  --on-primary: #ffffff;
+
+  // ---- Gold Premium Theme ----
+  --gold-start: #e5d2b8;
+  --gold-mid: #cca87a;
+  --gold-end: #997750;
+  --glow-color: rgba(204, 168, 122, 0.03);
+  --desc-text: #57534e;
+  --brand-text: #292524;
+}
+
+// =============================================
+// Accent color themes (override --primary only)
+// Backgrounds/text stay the same — like ChatGPT's accent system.
+// =============================================
+
+// 云上舞白 — warm brown
+[data-theme="cloud-dancer"] {
+  --primary: #1238c7;
+  --primary-rgb: 18, 56, 199;
+  --primary-hover: #0b2a9d;
+  --primary-light: rgba(18, 56, 199, 0.1);
+  --primary-gradient: linear-gradient(135deg, #1238c7 0%, #3159e6 100%);
+}
+[data-theme="cloud-dancer"][data-mode="dark"] {
+  --primary: #6f8cff;
+  --primary-rgb: 111, 140, 255;
+  --primary-hover: #91a5ff;
+  --primary-light: rgba(111, 140, 255, 0.15);
+  --primary-gradient: linear-gradient(135deg, #3159e6 0%, #91a5ff 100%);
+}
+
+// 繁花如梦 — rose pink
+[data-theme="blossom-dream"] {
+  --primary: #D4849A;
+  --primary-rgb: 212, 132, 154;
+  --primary-hover: #C4748A;
+  --primary-light: rgba(212, 132, 154, 0.12);
+  --primary-gradient: linear-gradient(135deg, #D4849A 0%, #E8A8B8 100%);
+}
+[data-theme="blossom-dream"][data-mode="dark"] {
+  --primary: #D19EBB;
+  --primary-rgb: 209, 158, 187;
+  --primary-hover: #DDB0C8;
+  --primary-light: rgba(209, 158, 187, 0.15);
+  --primary-gradient: linear-gradient(135deg, #D19EBB 0%, #A878A8 100%);
+}
+
+// 刚玉蓝 — steel blue
+[data-theme="corundum-blue"] {
+  --primary: #4A6670;
+  --primary-rgb: 74, 102, 112;
+  --primary-hover: #3D565E;
+  --primary-light: rgba(74, 102, 112, 0.1);
+  --primary-gradient: linear-gradient(135deg, #4A6670 0%, #5A7A86 100%);
+}
+[data-theme="corundum-blue"][data-mode="dark"] {
+  --primary: #6A9AAA;
+  --primary-rgb: 106, 154, 170;
+  --primary-hover: #7AAABA;
+  --primary-light: rgba(106, 154, 170, 0.15);
+  --primary-gradient: linear-gradient(135deg, #4A6670 0%, #6A9AAA 100%);
+}
+
+// 冰猕猴桃汁绿 — kiwi green
+[data-theme="kiwi-green"] {
+  --primary: #7A9A5C;
+  --primary-rgb: 122, 154, 92;
+  --primary-hover: #6A8A4C;
+  --primary-light: rgba(122, 154, 92, 0.1);
+  --primary-gradient: linear-gradient(135deg, #7A9A5C 0%, #8AAA6C 100%);
+}
+[data-theme="kiwi-green"][data-mode="dark"] {
+  --primary: #9ABA7C;
+  --primary-rgb: 154, 186, 124;
+  --primary-hover: #AACA8C;
+  --primary-light: rgba(154, 186, 124, 0.15);
+  --primary-gradient: linear-gradient(135deg, #7A9A5C 0%, #9ABA7C 100%);
+}
+
+// 辛辣红 — spicy red
+[data-theme="spicy-red"] {
+  --primary: #8B4049;
+  --primary-rgb: 139, 64, 73;
+  --primary-hover: #7A3540;
+  --primary-light: rgba(139, 64, 73, 0.1);
+  --primary-gradient: linear-gradient(135deg, #8B4049 0%, #A05058 100%);
+}
+[data-theme="spicy-red"][data-mode="dark"] {
+  --primary: #C06068;
+  --primary-rgb: 192, 96, 104;
+  --primary-hover: #D07078;
+  --primary-light: rgba(192, 96, 104, 0.15);
+  --primary-gradient: linear-gradient(135deg, #8B4049 0%, #C06068 100%);
+}
+
+// 明水鸭色 — teal
+[data-theme="teal-water"] {
+  --primary: #5A8A8A;
+  --primary-rgb: 90, 138, 138;
+  --primary-hover: #4A7A7A;
+  --primary-light: rgba(90, 138, 138, 0.1);
+  --primary-gradient: linear-gradient(135deg, #5A8A8A 0%, #6A9A9A 100%);
+}
+[data-theme="teal-water"][data-mode="dark"] {
+  --primary: #7ABAAA;
+  --primary-rgb: 122, 186, 170;
+  --primary-hover: #8ACABA;
+  --primary-light: rgba(122, 186, 170, 0.15);
+  --primary-gradient: linear-gradient(135deg, #5A8A8A 0%, #7ABAAA 100%);
+}
+
+// Geist — monochrome
+[data-theme="geist"] {
+  --primary: #444444;
+  --primary-rgb: 68, 68, 68;
+  --primary-hover: #333333;
+  --primary-light: rgba(68, 68, 68, 0.08);
+  --primary-gradient: linear-gradient(135deg, #444444 0%, #666666 100%);
+}
+[data-theme="geist"][data-mode="dark"] {
+  --primary: #ededed;
+  --primary-rgb: 237, 237, 237;
+  --primary-hover: #d5d5d5;
+  --primary-light: rgba(237, 237, 237, 0.1);
+  --primary-gradient: linear-gradient(135deg, #ededed 0%, #cccccc 100%);
+  --on-primary: #111111;
+}
+
+// =============================================
+// Global reset
+// =============================================
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: 'HarmonyOS Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+#app {
+  height: 100%;
+}
+
+// =============================================
+// Scrollbar
+// =============================================
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-tertiary);
+  border-radius: 3px;
+
+  &:hover {
+    background: var(--text-secondary);
+  }
+}
+
+// =============================================
+// Button base
+// =============================================
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease, opacity 0.15s ease;
+
+  &-primary {
+    background: var(--primary);
+    color: var(--on-primary);
+
+    &:hover {
+      background: var(--primary-hover);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &-secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+
+    &:hover {
+      background: var(--bg-hover);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// =============================================
+// Card base
+// =============================================
+.card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+// =============================================
+// Switch toggle
+// =============================================
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-tertiary);
+    transition: 0.3s;
+    border-radius: 24px;
+    border: 1px solid var(--border-color);
+
+    &::before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 2px;
+      bottom: 2px;
+      background-color: var(--text-tertiary);
+      transition: 0.3s;
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  input:checked+.switch-slider {
+    background-color: var(--primary);
+    border-color: var(--primary);
+
+    &::before {
+      transform: translateX(20px);
+      background-color: #ffffff;
+    }
+  }
+
+  input:disabled+.switch-slider {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// =============================================
+// WeFlow AI workspace design system
+// Quiet warm-neutral surfaces, Linear-style density,
+// and semantic tokens shared by every desktop surface.
+// =============================================
+:root,
+[data-mode="light"] {
+  --primary: #5e81ac;
+  --primary-rgb: 94, 129, 172;
+  --primary-hover: #4f7199;
+  --primary-light: rgba(94, 129, 172, 0.12);
+  --primary-gradient: var(--primary);
+  --bg-primary: #f7f7f5;
+  --bg-secondary: #f0f0ed;
+  --bg-secondary-solid: #f0f0ed;
+  --bg-tertiary: #e9e9e6;
+  --bg-hover: #ececea;
+  --bg-sidebar: #f0f0ed;
+  --text-primary: #37352f;
+  --text-secondary: #787774;
+  --text-tertiary: #9b9a97;
+  --border-color: #e8e8e5;
+  --border-radius: 12px;
+  --shadow-sm: 0 1px 2px rgba(55, 53, 47, 0.03);
+  --shadow-md: 0 2px 8px rgba(55, 53, 47, 0.04);
+  --card-bg: #ffffff;
+  --card-inner-bg: #ffffff;
+  --sidebar-width: 232px;
+  --success: #6f9b78;
+  --warning: #b89b55;
+  --danger: #bd7373;
+}
+
+html,
+body {
+  font-family: Inter, 'PingFang SC', 'Noto Sans CJK SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+}
+
+.btn {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 13px;
+  transition: background-color .15s ease, border-color .15s ease, transform .12s ease;
+  &:active { transform: scale(.98); }
+  &-primary { border-color: var(--primary); background: var(--primary); }
+  &-secondary { background: #fff; color: var(--text-primary); }
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+}
+
+input, textarea, select {
+  border-color: var(--border-color);
+  border-radius: 8px;
+  &:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(var(--primary-rgb), .12); }
+}
+
+// Apple-inspired desktop system: quiet surfaces, native-feeling controls,
+// and one consistent spacing/radius vocabulary across the app.
+:root,
+[data-mode="light"] {
+  --bg-primary: #f5f5f7;
+  --bg-secondary: #ededf0;
+  --bg-secondary-solid: #ededf0;
+  --bg-tertiary: #e4e4e8;
+  --bg-hover: #e7e7eb;
+  --bg-sidebar: #ececef;
+  --card-bg: #ffffff;
+  --text-primary: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-tertiary: #8e8e93;
+  --border-color: rgba(60, 60, 67, 0.18);
+  --separator-color: rgba(60, 60, 67, 0.12);
+  --primary: #4f6f9c;
+  --primary-hover: #3f5e87;
+  --primary-rgb: 79, 111, 156;
+  --primary-light: rgba(79, 111, 156, 0.12);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --radius-control: 9px;
+  --radius-panel: 14px;
+}
+
+[data-mode="dark"] {
+  --bg-primary: #1c1c1e;
+  --bg-secondary: #2c2c2e;
+  --bg-secondary-solid: #2c2c2e;
+  --bg-tertiary: #3a3a3c;
+  --bg-hover: #3a3a3c;
+  --bg-sidebar: #242426;
+  --card-bg: #2c2c2e;
+  --text-primary: #f5f5f7;
+  --text-secondary: #a1a1a6;
+  --text-tertiary: #8e8e93;
+  --border-color: rgba(235, 235, 245, 0.18);
+  --separator-color: rgba(235, 235, 245, 0.12);
+  --primary: #86a4d4;
+  --primary-hover: #a1b9df;
+  --primary-rgb: 134, 164, 212;
+  --primary-light: rgba(134, 164, 212, 0.16);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.24);
+}
+
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgba(var(--primary-rgb), 0.72);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
